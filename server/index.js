@@ -5,8 +5,6 @@ const config = require('./config/config');
 const {sequelize} = require('./models');
 const path = require('path');
 
-
-
 const app = express();
 
 app.use(bodyParser.json());

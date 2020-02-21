@@ -1,0 +1,6 @@
+server/config/
+server/img/
+node_modules
+/client/node_modules/
+/client/public/
+/client/vue.config.js
