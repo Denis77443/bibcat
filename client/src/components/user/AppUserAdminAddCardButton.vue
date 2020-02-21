@@ -189,6 +189,16 @@ import Loader from "../admin/ImageLoader";
 import { limiter } from "../admin/mixins/rowColLimiter";
 import { saverecord } from "../admin/mixins/insertUpdateRecord";
 
+const INSERT_ITEM = () => ({
+  auths: null,
+  title: null,
+  year: null,
+  card: null,
+  image: null,
+  izmiran: false
+});
+
+
 export default {
   mixins: [limiter, saverecord],
   components: {
@@ -203,14 +213,7 @@ export default {
       activeClass: false,
       error: null,
       dialog: false,
-      insertItem: {
-        auths: null,
-        title: null,
-        year: null,
-        card: null,
-        image: null,
-        izmiran: false
-      },
+      insertItem: INSERT_ITEM(),
       valid: true,
       formData: null,
       fileExtention: "",
@@ -228,16 +231,11 @@ export default {
   watch: {
     dialog() {
       this.$refs.form_insert.reset();
-
-      this.insertItem.auths = null;
-      this.insertItem.title = null;
-      this.insertItem.year = null;
-      this.insertItem.card = null;
-      this.insertItem.izmiran = false;
+      Object.assign(this.insertItem, INSERT_ITEM());
 
       this.formData = null;
       this.fileExtention = "";
-      this.insertItem.image = null;
+     
 
       this.error = null;
       (this.activeClass = false), (this.value = 0), (this.interval = {});
