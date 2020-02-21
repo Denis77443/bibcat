@@ -143,6 +143,7 @@ export default {
   async mounted() {
     await this.fetchAllCards();
     setTimeout(() => {
+      console.log("delay inside mounted");
       this.loading = false;
     }, 500);
   },
@@ -167,6 +168,8 @@ export default {
   watch: {
     filter(newFilter) {
       //set page/card to start position
+      this.loading = true;
+
       this.pagination.first = 1;
       this.pagination.current = 1;
       this.prevNum = 0;
@@ -182,6 +185,10 @@ export default {
         this.items.length >= config.CARDS_ON_PAGE
           ? config.CARDS_ON_PAGE
           : this.items.length;
+
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
     },
     filterData: {
       deep: true,
@@ -190,10 +197,6 @@ export default {
         this.pagination.last = Math.ceil(
           this.items.length / config.CARDS_ON_PAGE
         );
-
-        setTimeout(() => {
-          this.loading = false;
-        }, 1000);
 
         if (val.length !== 0) {
           this.current.id = val[0].id;
@@ -205,14 +208,7 @@ export default {
     },
     cards(val) {
       let emptyFilter = !Object.keys(this.filter).length;
-
-      if (emptyFilter) {
-        this.items = val;
-      } else {
-        this.items = this.getFilteredCards;
-      }
-
-      return this.items;
+      return (this.items = emptyFilter ? val : this.getFilteredCards);
     }
   },
   methods: {
