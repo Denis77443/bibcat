@@ -83,7 +83,7 @@
                   }"
                   v-on:cardNext="onNextClick"
                 />
-                <div style="border:0px solid green; margin-left: 15px">
+                <div class="ml-4">
                   <AdminPanel
                     v-if="user !== null && this.$route.name === 'admin2'"
                     :current-card-id="current.id"
@@ -172,7 +172,9 @@ export default {
       this.pagination.current = 1;
       this.prevNum = 0;
 
-      if (newFilter.hasOwnProperty("izmiran")) {
+      let hasSerachFilter = Object.prototype.hasOwnProperty.call(newFilter,"izmiran")
+
+      if (hasSerachFilter) {
         this.items = this.getFilteredCards;
       } else {
         this.items = this.cards;

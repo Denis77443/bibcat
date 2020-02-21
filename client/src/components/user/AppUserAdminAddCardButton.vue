@@ -198,7 +198,6 @@ const INSERT_ITEM = () => ({
   izmiran: false
 });
 
-
 export default {
   mixins: [limiter, saverecord],
   components: {
@@ -235,9 +234,8 @@ export default {
 
       this.formData = null;
       this.fileExtention = "";
-     
-
       this.error = null;
+
       (this.activeClass = false), (this.value = 0), (this.interval = {});
 
       //Clear image box
