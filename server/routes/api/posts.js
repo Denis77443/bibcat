@@ -22,7 +22,7 @@ let connectionsArray = [];
 
 let role = {
   user: 'denis',
-  admin: 'sruser'
+  admin: 'root'
 }
 
 
