@@ -5,7 +5,7 @@
       :active="loading"
       :indeterminate="loading"
       color="light-blue"
-      height="7"
+      height="5"
       value="10"
       striped
       class="mt-3"
@@ -166,21 +166,18 @@ export default {
   },
   watch: {
     filter(newFilter) {
-      console.log("watch filter in LIST component", newFilter);
       //set page/card to start position
       this.pagination.first = 1;
       this.pagination.current = 1;
       this.prevNum = 0;
 
-      let hasSerachFilter = Object.prototype.hasOwnProperty.call(newFilter,"izmiran")
+      let hasSerachFilter = Object.prototype.hasOwnProperty.call(
+        newFilter,
+        "izmiran"
+      );
 
-      if (hasSerachFilter) {
-        this.items = this.getFilteredCards;
-      } else {
-        this.items = this.cards;
-      }
+      this.items = hasSerachFilter ? this.getFilteredCards : this.cards;
 
-      console.log("this.items in WATCH", this.items);
       this.nextNum =
         this.items.length >= config.CARDS_ON_PAGE
           ? config.CARDS_ON_PAGE
@@ -189,7 +186,6 @@ export default {
     filterData: {
       deep: true,
       handler: function(val) {
-        console.log("Watch list is changed filterData ", val);
         this.error = this.items.length === 0 ? true : false;
         this.pagination.last = Math.ceil(
           this.items.length / config.CARDS_ON_PAGE
