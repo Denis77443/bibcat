@@ -56,7 +56,7 @@
                     :src="showImageCard(item.id, item.image) + '?' + Date.now()"
                     @error="onError"
                     :height="350"
-                    :width="520"
+                    :width="526"
                     aspect-ratio="1.4"
                   />
                   <v-row
@@ -241,21 +241,11 @@ export default {
       return styleCard;
     },
     showImageCard(id, img) {
-      try {
-        if (img !== undefined) {
-          let ext = img.match(/(\w+)$/g).join();
-          return this.path + id + "." + ext;
-        } else {
-          return this.path + "not_found.png";
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      let ext = img.match(/(\w+)$/g).join();
+      return this.path + id + "." + ext;
     },
     onError() {
       this.$refs.img[0].src = this.path + "not_found.png";
-      this.$refs.img[0].style.height = "350px";
-      this.$refs.img[0].style.width = "520px";
     }
   }
 };
