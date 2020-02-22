@@ -108,9 +108,7 @@ import { mapState, mapGetters, mapActions } from "vuex";
 
 import { imageCard } from "../../mixins/imageCard";
 
-
 export default {
-
   mixins: [imageCard],
 
   components: {
@@ -246,7 +244,11 @@ export default {
       return styleCard;
     },
     showImageCard(id, img) {
-      return this.path + this.$_imageCard_fileName(id, img);
+      let image =
+        img !== undefined
+          ? this.$_imageCard_fileName(id, img)
+          : "not_found.png";
+      return this.path + image;
     },
     onError() {
       this.$refs.img[0].src = this.path + "not_found.png";

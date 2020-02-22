@@ -85,15 +85,17 @@
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 
+const SEARCH_DEFAULT_FILTER = () => ({
+  auths: null,
+  title: null,
+  year: null,
+  izmiran: null
+});
+
 export default {
   data() {
     return {
-      search: {
-        auths: null,
-        title: null,
-        year: null,
-        izmiran: null
-      }
+      search: SEARCH_DEFAULT_FILTER()
     };
   },
   computed: {
@@ -105,18 +107,14 @@ export default {
       let emptyFilter = !Object.keys(val).length;
 
       if (emptyFilter) {
-        this.search.auths = null;
-        this.search.title = null;
-        this.search.year = null;
-        this.search.izmiran = null;
+        Object.assign(this.search, SEARCH_DEFAULT_FILTER());
       }
-      //console.log('isMyObjectEmpty===== ',isMyObjectEmpty)
     }
   },
   methods: {
     ...mapActions(["setCurrentFilter"]),
     async resetParams() {
-      this.setCurrentFilter({});
+      await this.setCurrentFilter({});
     },
     async searchItems() {
       let izmiran = (await this.search.izmiran) === true ? 1 : undefined;
