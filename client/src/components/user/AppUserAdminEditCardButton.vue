@@ -292,7 +292,7 @@ export default {
           console.log('что уходит в IMAGE in EDIT comp', this.image)
 
 
-        await CardService.showImage("EDIT_IMG_BOX", this.image, 350, 284);
+        await CardService.showImage("EDIT_IMG_BOX", this.image, 350, 526);
       } else {
         this.$refs.EDIT_IMG_BOX_ICON.style = "display: inline-box";
       }

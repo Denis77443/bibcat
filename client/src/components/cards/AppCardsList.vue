@@ -143,7 +143,6 @@ export default {
   async mounted() {
     await this.fetchAllCards();
     setTimeout(() => {
-      console.log("delay inside mounted");
       this.loading = false;
     }, 500);
   },

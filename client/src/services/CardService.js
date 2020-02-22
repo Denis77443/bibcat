@@ -174,7 +174,8 @@ let cat = await this.readFileAsync(files[0])
       URL.revokeObjectURL(img.src);
     };
 
-    img.style.width = "100%";
+    img.style.height = "350px";
+    img.style.width = "526px";
     await BOX.append(img);
   },
 
