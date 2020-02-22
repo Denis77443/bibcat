@@ -208,7 +208,6 @@ export default {
   },
   data() {
     return {
-      current: {},
       path: process.env.VUE_APP_API_URL,
       titleOfToolbar: "Редактирование",
       imageInBlock: null,
@@ -219,12 +218,12 @@ export default {
       dialogUpdate: false,
       validUpdate: true,
       updateItem: {
-        id: "",
-        auths: "",
-        title: "",
-        year: 0,
+        id: null,
+        auths: null,
+        title: null,
+        year: null,
         izmiran: null,
-        card: "",
+        card: null,
         image: null
       },
       image: null,
@@ -262,18 +261,13 @@ export default {
   methods: {
     async showEditDialog(id) {
       this.dialogUpdate = true;
-      this.current = await this.getByIndexRecord(id);
+      let current = await this.getByIndexRecord(id);
+      
+      Object.assign(this.updateItem, current);
 
-      this.updateItem.id = id;
-      this.updateItem.auths = this.current.auths;
-      this.updateItem.title = this.current.title;
-      this.updateItem.year = this.current.year;
-      this.updateItem.izmiran = this.current.izmiran == 1 ? true : false;
-      this.updateItem.card = this.current.card;
-      this.updateItem.image =
-        this.current.image === undefined ? null : this.current.image;
+      this.updateItem.izmiran = this.updateItem.izmiran == 1 ? true : false;
 
-      if (this.current.image !== undefined) {
+      if (current.image !== undefined) {
         this.$refs.EDIT_IMG_BOX_ICON.style = "display: none";
 
         this.image =
@@ -287,11 +281,6 @@ export default {
         if (statusUrl == 404 || statusUrl == 500) {
           this.image = (await this.path) + "not_found.png" + "?" + Date.now();
         }
-
-
-          console.log('что уходит в IMAGE in EDIT comp', this.image)
-
-
         await CardService.showImage("EDIT_IMG_BOX", this.image, 350, 526);
       } else {
         this.$refs.EDIT_IMG_BOX_ICON.style = "display: inline-box";
@@ -303,8 +292,6 @@ export default {
           function(response) {
             if (response) {
               resolve(response.status);
-            } else {
-              reject(new Error(error));
             }
           },
           error => {
@@ -315,12 +302,10 @@ export default {
     },
 
     async openFileDialogEdit(e) {
-      console.log("OPEN DIALOG FROM openFileDialogEdit");
       this.error = null;
       await CardService.openFileDialog(e);
     },
     async onFileChangeEdit(e) {
-      console.log("onFileChangeEdit", e);
       this.$refs.EDIT_IMG_BOX.style = await "display: inline-flex";
       this.$refs.EDIT_IMG_BOX_ICON.style = "display: none";
       this.error = await CardService.errorAlert(e);
@@ -333,7 +318,7 @@ export default {
 
       if (fileInfo !== null) {
         this.formData = fileInfo.form;
-        this.fileOriginal = this.updateItem.image = fileInfo.name;
+        this.updateItem.image = fileInfo.name;
         this.fileExtention = fileInfo.ext;
       }
     }

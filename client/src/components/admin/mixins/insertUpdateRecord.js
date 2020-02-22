@@ -63,7 +63,7 @@ export const saverecord = {
               //console.log('lastId= ', lastId)
               await CardService.delay(ms);
               this.value += await 17;
-              await CardService.renameImageFile(this.fileOriginal, lastId);
+              await CardService.renameImageFile(text.image, lastId);
             }
 
             //await this.delay(ms);
