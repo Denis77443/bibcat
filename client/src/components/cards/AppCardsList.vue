@@ -106,7 +106,13 @@ import PrintCardButton from "../ui/AppCardsListPrintButton";
 import AdminPanel from "../user/AppUserAdminPanel";
 import { mapState, mapGetters, mapActions } from "vuex";
 
+import { imageCard } from "../../mixins/imageCard";
+
+
 export default {
+
+  mixins: [imageCard],
+
   components: {
     Pagination,
     ErrorMessage,
@@ -240,8 +246,7 @@ export default {
       return styleCard;
     },
     showImageCard(id, img) {
-      let ext = img.match(/(\w+)$/g).join();
-      return this.path + id + "." + ext;
+      return this.path + this.$_imageCard_fileName(id, img);
     },
     onError() {
       this.$refs.img[0].src = this.path + "not_found.png";
